@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A8A8A8"
+    tools:context=".MainActivity">
+
+    <!-- Lato sinistro -->
+    <LinearLayout
+        android:id="@+id/linearLeft"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:padding="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearRight"
+        app:layout_constraintHorizontal_weight="1">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="LEFT" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="RIGHT" />
+
+    </LinearLayout>
+
+    <!-- Lato destro -->
+    <LinearLayout
+        android:id="@+id/linearRight"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintStart_toEndOf="@id/linearLeft"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1">
+
+        <TextView
+            android:id="@+id/pingText"
+            android:text="NONE"
+            android:minWidth="50dp"
+            android:textAlignment="textEnd"
+            android:textColor="#1C00F2"
+            android:textSize="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:maxHeight="40dp"
+            android:minWidth="150dp"
+            android:rotation="270"
+            android:minHeight="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:max="200"
+            android:splitTrack="false"
+            android:layout_gravity="end"
+            android:progressTint="#297794"
+            android:progressBackgroundTint="#949494"
+            android:thumbTint="#7A7AD9"
+            android:progress="100"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
