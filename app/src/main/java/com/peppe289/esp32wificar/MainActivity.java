@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         TextView tv = findViewById(R.id.pingText);
+        TextView termalView = findViewById(R.id.termalText);
         Button left = findViewById(R.id.button);
         Button right = findViewById(R.id.button2);
         WebSocketESP32 webSocketESP32 = new WebSocketESP32();
@@ -42,11 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
         webSocketESP32.callback = new WebSocketESP32.OnPingCallBack() {
             @Override
-            public void update(long ms) {
+            public void update(long ms, float temp) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         tv.setText(String.format("%d ms", ms));
+                        termalView.setText(temp + "°C");
                     }
                 });
             }

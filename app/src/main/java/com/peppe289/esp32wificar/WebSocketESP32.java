@@ -59,22 +59,29 @@ public class WebSocketESP32 {
 
             @Override
             public void onMessage(String message) {
-                //System.out.println("Messaggio ricevuto: " + message);
+                int key;
+                float temperature;
+                System.out.println("Messaggio ricevuto: " + message);
                 long now = System.currentTimeMillis();
 
+                String[] part = message.split("\\|");
+                key = Integer.parseInt(part[0]);
+                temperature = Float.parseFloat(part[1]);
+
+                System.out.println("key: " + key + " temp: " + temperature);
+
                 try {
-                    int key = Integer.parseInt(message);
                     long reqTime = timeRegister.get(key);
                     //Log.d("PING", "Request Ping: " + (now - reqTime) + " ms");
                     timeRegister.remove(key);
-                    callback.update(now - reqTime);
+                    callback.update(now - reqTime, temperature);
                 } catch (NullPointerException ignored) {}
             }
 
             @Override
             public void onClose(int code, String reason, boolean remote) {
                 Log.d("WebSocket", "Chiusa: code=" + code + " reason=" + reason + " remote=" + remote);
-                callback.update(-1);
+                callback.update(-1, -1);
             }
 
             @Override
@@ -131,6 +138,6 @@ public class WebSocketESP32 {
     }
 
     public interface OnPingCallBack {
-        public void update(long ms);
+        public void update(long ms, float temp);
     }
 }
