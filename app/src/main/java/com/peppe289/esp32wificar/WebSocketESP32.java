@@ -1,7 +1,5 @@
 package com.peppe289.esp32wificar;
 
-import android.util.Log;
-
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -15,7 +13,7 @@ import java.util.Random;
 public class WebSocketESP32 {
     private int steering = 0;
     private int[] forword;
-    private String URL = "ws://192.168.4.1:81";
+    public final String URL = "ws://192.168.4.1:81";
 
     public OnPingCallBack callback;
 
@@ -28,7 +26,6 @@ public class WebSocketESP32 {
     public void changeSteering(int sg) {
         if (sg != steering && (sg == -1 || sg == 0 || sg == 1)) {
             steering = sg;
-            //Log.d("STEERING", "Nuovo valore: " + steering);
         }
     }
 
@@ -36,7 +33,6 @@ public class WebSocketESP32 {
 
         if (forword[0] != direction && (direction == -1 || direction == 1 || direction == 0)) {
             forword[0] = direction;
-            //Log.d("FORWORD", "Nuovo valore: " + forword[0]);
         }
 
         if (speed == forword[1]) return;
@@ -49,7 +45,6 @@ public class WebSocketESP32 {
         forword = new int[2];
         forword[0] = 0;
         forword[1] = 0;
-
 
         WebSocketClient client = new WebSocketClient(uri) {
             @Override
@@ -72,7 +67,6 @@ public class WebSocketESP32 {
 
                 try {
                     long reqTime = timeRegister.get(key);
-                    //Log.d("PING", "Request Ping: " + (now - reqTime) + " ms");
                     timeRegister.remove(key);
                     callback.update(now - reqTime, temperature);
                 } catch (NullPointerException ignored) {}
@@ -80,7 +74,6 @@ public class WebSocketESP32 {
 
             @Override
             public void onClose(int code, String reason, boolean remote) {
-                Log.d("WebSocket", "Chiusa: code=" + code + " reason=" + reason + " remote=" + remote);
                 callback.update(-1, -1);
             }
 
@@ -125,9 +118,6 @@ public class WebSocketESP32 {
 
                         String motorB = "B," + forword[1] + "," + forword[0];
                         client.send(motorB);
-
-                        //Log.d("SEND", motorA);
-                        //Log.d("SEND", motorB);
                     }
                     Thread.sleep(50);
                 }
