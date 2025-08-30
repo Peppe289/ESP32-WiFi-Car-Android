@@ -115,7 +115,7 @@ public class WebSocketESP32 {
 
                         // send steering signal only if first 0 or if isn't 0
                         if (steering != 0 || canSendSteering) {
-                            String motorA = "A," + ((steering == 0) ? "0," : "240,") + steering;
+                            String motorA = "A," + ((steering == 0) ? "0," : "205,") + steering;
                             client.send(motorA);
                             canSendSteering = true;
                         }

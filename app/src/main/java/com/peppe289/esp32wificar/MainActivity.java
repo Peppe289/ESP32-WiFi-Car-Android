@@ -111,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     int value = i - 100;
                     if (value < 0) value = -value;
-                    int basePower = 160;
-                    int maxPower = 255;
+
+                    int basePower = 130;
+                    int maxPower = 235;
                     int normalized = (int) Math.round(basePower + (maxPower - basePower) * Math.pow(value / 100.0, 2.0));
                     webSocketESP32.changeForword(-direction, normalized);
                 }
