@@ -5,14 +5,12 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Random;
 
 public class WebSocketESP32 {
     private int steering = 0;
-    private int[] forword;
+    private int[] forward;
     public final String URL = "ws://192.168.4.1:81";
 
     public OnPingCallBack callback;
@@ -31,20 +29,20 @@ public class WebSocketESP32 {
 
     public void changeForword(int direction, int speed) {
 
-        if (forword[0] != direction && (direction == -1 || direction == 1 || direction == 0)) {
-            forword[0] = direction;
+        if (forward[0] != direction && (direction == -1 || direction == 1 || direction == 0)) {
+            forward[0] = direction;
         }
 
-        if (speed == forword[1]) return;
+        if (speed == forward[1]) return;
 
-        forword[1] = Math.min(speed, 255);
+        forward[1] = Math.min(speed, 255);
     }
 
     public void connectionRunner() throws URISyntaxException {
         URI uri = new URI(URL);
-        forword = new int[2];
-        forword[0] = 0;
-        forword[1] = 0;
+        forward = new int[2];
+        forward[0] = 0;
+        forward[1] = 0;
 
         WebSocketClient client = new WebSocketClient(uri) {
             @Override
@@ -116,7 +114,7 @@ public class WebSocketESP32 {
                         if (steering == 0)
                             canSendSteering = false;
 
-                        String motorB = "B," + forword[1] + "," + forword[0];
+                        String motorB = "B," + forward[1] + "," + forward[0];
                         client.send(motorB);
                     }
                     Thread.sleep(50);
